@@ -33,7 +33,7 @@ def collate_fn(data):
     data.sort(key=lambda x: len(x[0]), reverse=True)
 
     # seperate source and target sequences
-    src_seqs, trg_seqs = zip(*data)
+    src_seqs, trg_seqs, name, ingreds = zip(*data)
 
     # merge sequences (from tuple of 1D tensor to 2D tensor)
     src_seqs, src_lengths = merge(src_seqs)
@@ -41,7 +41,7 @@ def collate_fn(data):
     # merge it
     #trg_seqs, trg_lengths = merge(trg_seqs)
     trg_seqs = torch.as_tensor(trg_seqs)
-    return src_seqs, src_lengths, trg_seqs #, trg_lengths
+    return src_seqs, src_lengths, trg_seqs, name, ingreds #, trg_lengths
 
 
 class RecipeData(data.Dataset):
@@ -56,5 +56,7 @@ class RecipeData(data.Dataset):
     def __getitem__(self, idx):
         X = torch.as_tensor(self.df.Ingredient_Numeric.iloc[idx])
         y = torch.as_tensor(self.df.Recipe_id_numeric.iloc[idx])
-        return X,y
+        name = self.df.Recipe_id.iloc[idx]
+        ingreds = self.df.Ingredients.iloc[idx]
+        return X,y, name, ingreds
     
