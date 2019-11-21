@@ -31,7 +31,13 @@ class EmbeddingNetwork(nn.Module):
         # self.h_n =  num_layers, batch_size, hidden_dim
         batch_size = self.h_n.shape[1]
         final_hidden_state = self.h_n[-1].view(batch_size, -1)  # Taking the output from the last stacked layer
-        return final_hidden_state, sequence_embedded
+        #output of shape (batch_size, seq_len, num_directions * hidden_size)
+        last_embedded = sequence_embedded[:,-1,:]
+        last_embedding = last_embedded.view(batch_size, -1)
+        #print("last embedding is {}".format(last_embedding.shape))
+        #print("sequence output is {}".format(sequence_embedded.shape))
+        return final_hidden_state, sequence_embedded # Literature suggests to use last output term for Classification and not h_n
+                                                     # However, for us, the final_hidden_state works better
     
 class ClassificationNetwork(nn.Module):
     
