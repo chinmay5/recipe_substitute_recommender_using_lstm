@@ -34,5 +34,5 @@ class Vocab(object):
         for any_ingredient in sentence.split(" "):
             if any_ingredient in self.word_2_idx.keys():
                 return True, any_ingredient
-        return False, _ # for ease in construct later
+        return False # for ease in construct later
     
