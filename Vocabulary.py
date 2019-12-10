@@ -35,4 +35,14 @@ class Vocab(object):
             if any_ingredient in self.word_2_idx.keys():
                 return True, any_ingredient
         return False # for ease in construct later
+        
+    def get_all_words_in_vocab(self, sentence):
+        # Check if sentence has any word in vocabulary
+        # return all the matching words then
+        # highly inefficient but okay :(
+        matching_list = []
+        for any_ingredient in sentence.split(" "):
+            if any_ingredient in self.word_2_idx.keys():
+            	matching_list.append(self.word_2_idx[any_ingredient])              
+        return len(matching_list)>0, matching_list  # for ease in construct later
     
