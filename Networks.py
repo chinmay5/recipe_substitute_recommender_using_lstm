@@ -6,12 +6,11 @@ from torch.nn.utils.rnn import pad_sequence
 
 class EmbeddingNetwork(nn.Module):
     
-    def __init__(self, vocab_size, hidden_dim, embedding_dim, dropout=0.3, bidirectional=False, glove=None):
+    def __init__(self, vocab_size, hidden_dim, dropout=0.3, bidirectional=False, glove=None):
         
         super(EmbeddingNetwork, self).__init__()
         self.vocab_size = vocab_size
         self.hidden_dim = hidden_dim
-        self.embedding_dim = embedding_dim
         self._load_glove_weights(glove)
         # self.embedding = nn.Embedding(self.vocab_size, self.embedding_dim)
         self.GRU = nn.GRU(input_size=self.embedding_dim, hidden_size=self.hidden_dim, dropout=dropout, num_layers=2, bidirectional=bidirectional)
