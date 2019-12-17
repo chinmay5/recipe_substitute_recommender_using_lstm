@@ -45,4 +45,16 @@ class Vocab(object):
             if any_ingredient in self.word_2_idx.keys():
             	matching_list.append(self.word_2_idx[any_ingredient])              
         return len(matching_list)>0, matching_list  # for ease in construct later
+        
+    def get_all_words_in_vocab_mit_map(self, sentence, input_map):
+        # We first check for the entries in the map
+        # If the entry is in the map values, we take the key and then return its corresponding vocabulary element
+        matching_list = []
+        for any_ingredient in sentence.split(" "):
+            for key, value in input_map.items():
+                if any_ingredient in value:
+                   # The corresponding key should be used now as an entry in the vocabulary
+                   matching_list.append(self.word_2_idx[key])
+        return len(matching_list)>0, matching_list  # for ease in construct later
+            
     
